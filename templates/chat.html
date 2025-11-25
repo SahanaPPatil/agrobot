@@ -1,0 +1,451 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Agrobot </title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <style>
+    :root{
+      --bg: #ffffff; --panel:#fafafa; --text:#111; --muted:#777; --accent:#28a745;
+      --mic:#007bff; --card-shadow: 0 8px 24px rgba(16,24,40,0.06);
+    }
+    body.dark {
+      --bg:#0f1724; --panel:#071023; --text:#e6eef8; --muted:#9fb0c8; --accent:#22c55e;
+      --mic:#2563eb; --card-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+
+    body{
+      font-family:Inter,Arial,sans-serif;
+      background:linear-gradient(180deg,var(--bg),#e4ebf3);
+      color:var(--text);
+      margin:0;padding:18px;
+      max-width:980px;margin-left:auto;margin-right:auto;
+    }
+    .container{display:flex;flex-direction:column;gap:12px}
+
+    /* Header */
+    .header{display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:48px;height:48px;border-radius:10px;
+      background:linear-gradient(135deg,#2ecc71,#1e8449);
+      display:flex;align-items:center;justify-content:center;
+      color:white;font-weight:800;font-size:18px;
+      box-shadow:var(--card-shadow)
+    }
+    h1{margin:0;font-size:20px;letter-spacing:.3px}
+    .subtitle{font-size:.87rem;color:var(--muted)}
+
+    .header-right{display:flex;align-items:center;gap:12px}
+
+    select#langSelect{
+      padding:8px 10px;border-radius:8px;
+      border:1px solid rgba(0,0,0,0.08);
+      background:transparent;color:var(--text)
+    }
+
+    /* Chat panel */
+    .chat{
+      background:var(--panel);
+      border-radius:12px;padding:14px;
+      min-height:460px;
+      box-shadow:var(--card-shadow);
+      overflow:auto;
+      transition:background .2s ease
+    }
+    .bot,.user{display:flex;margin:12px 0;gap:10px}
+    .user{justify-content:flex-end}
+    .bot{justify-content:flex-start}
+
+    .msg{
+      max-width:72%;padding:12px 14px;border-radius:14px;
+      background:rgba(255,255,255,0.05);
+      color:var(--text);
+      opacity:0;
+      transform:translateY(8px) scale(.96);
+      animation:fadeIn .35s forwards;
+    }
+    .user .msg{background:#d4f8d4;color:#052405}
+    .bot .msg{background:var(--bg)}
+
+    .meta{font-size:.88rem;color:var(--muted);margin-top:6px}
+    .note{font-size:.86rem;color:#ffb86b;font-style:italic;margin-top:8px}
+
+    /* Controls */
+    .controls{display:flex;gap:10px;align-items:center;margin-top:8px}
+    .input{flex:1;display:flex;gap:8px;align-items:center}
+
+    /* -------------- INPUT TEXT FIXED FOR EDGE/CHROME -------------- */
+    input[type="text"]{
+      flex:1;padding:12px;
+      border-radius:10px;
+      -webkit-appearance:none;appearance:none;
+      border:1px solid rgba(0,0,0,0.12);
+      background:rgba(255,255,255,0.15);
+      color:var(--text) !important;
+      caret-color:var(--text) !important;
+      -webkit-text-fill-color:var(--text) !important;
+      font-size:16px;outline:none;
+    }
+    input[type="text"]::placeholder{color:var(--muted) !important;opacity:1}
+    body.dark input[type="text"]{
+      background: #0d1117;
+      border: 1px solid #30363d;
+      color: #e6eef8 !important;
+      -webkit-text-fill-color: #e6eef8 !important;
+      caret-color: #e6eef8;
+    }
+    body.dark input[type="text"]::placeholder{
+      color: #9fb0c8;
+    }
+
+    /* Autofill fix */
+    input:-webkit-autofill{
+      -webkit-text-fill-color:var(--text) !important;
+      transition:background-color 9999s ease-in-out 0s !important;
+    }
+
+    .plus-btn{
+      width:44px;height:44px;border-radius:10px;
+      border:1px dashed rgba(0,0,0,0.20);
+      background:transparent;color:var(--muted);
+      font-size:25px;cursor:pointer;
+    }
+    .mic-btn{
+      width:44px;height:44px;border-radius:10px;
+      background:var(--mic);color:white;
+      border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 6px 18px rgba(0,0,0,0.25)
+    }
+    .mic-btn.listening{animation:micPulse 1s infinite}
+
+    .send-btn{
+      padding:10px 18px;border-radius:10px;
+      background:var(--accent);color:white;border:none;cursor:pointer;
+      font-weight:600;
+    }
+
+    @keyframes fadeIn{to{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes micPulse{
+      0%{box-shadow:0 0 0 0 rgba(255,255,255,0.3)}
+      70%{box-shadow:0 0 0 16px rgba(255,255,255,0)}
+      100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
+    }
+
+    .dots span{
+      display:inline-block;
+      width:7px;height:7px;margin:0 3px;border-radius:50%;
+      background:var(--muted);opacity:.5;
+      animation:typing .9s infinite;
+    }
+    .dots span:nth-child(2){animation-delay:.15s}
+    .dots span:nth-child(3){animation-delay:.3s}
+    @keyframes typing{
+      0%{transform:translateY(0);opacity:.4}
+      50%{transform:translateY(-5px);opacity:1}
+      100%{transform:translateY(0);opacity:.4}
+    }
+    /* small responsive */
+    @media (max-width:640px){ .msg{max-width:82%} .header{flex-direction:column;align-items:flex-start} }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="brand">
+      <div class="logo">Ag</div>
+      <div>
+        <h1>Agrobot</h1>
+        <div class="subtitle">AI-based multilingual crop diagnosis</div>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <select id="langSelect">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="mr">मराठी</option>
+        <option value="kn">ಕನ್ನಡ</option>
+        <option value="te">తెలుగు</option>
+      </select>
+
+      <label style="color:var(--muted);font-size:0.9rem;">Dark</label>
+      <input id="darkToggle" type="checkbox">
+
+      <label style="color:var(--muted);font-size:0.9rem;">🔊 Speak</label>
+      <input id="speakToggle" type="checkbox" checked>
+    </div>
+  </div>
+
+  <div class="chat" id="chatbox">
+    <div class="bot">
+      <div class="msg">
+        Hello — type, upload, or speak symptoms.<br>
+        Try: <em>leaves turning yellow with spots</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="input">
+      <button class="plus-btn" id="plusBtn">＋</button>
+      <input type="file" id="fileInput" accept="image/*" style="display:none">
+      <input type="text" id="textInput" placeholder="Type symptoms or use mic">
+    </div>
+
+    <button class="mic-btn" id="micBtn">🎤</button>
+    <button class="send-btn" id="sendBtn">Send</button>
+  </div>
+
+</div>
+
+<script>
+/* DOM */
+const chatbox=document.getElementById("chatbox");
+const fileInput=document.getElementById("fileInput");
+const plusBtn=document.getElementById("plusBtn");
+const textInput=document.getElementById("textInput");
+const micBtn=document.getElementById("micBtn");
+const sendBtn=document.getElementById("sendBtn");
+const langSelect=document.getElementById("langSelect");
+const darkToggle=document.getElementById("darkToggle");
+const speakToggle=document.getElementById("speakToggle");
+
+/* Dark Mode */
+if(localStorage.getItem("agro_dark")==="1"){
+  document.body.classList.add("dark"); darkToggle.checked=true;
+}
+darkToggle.onchange=()=>{
+  if(darkToggle.checked){
+    document.body.classList.add("dark");
+    localStorage.setItem("agro_dark","1");
+  } else {
+    document.body.classList.remove("dark");
+    localStorage.setItem("agro_dark","0");
+  }
+};
+
+/* Speak toggle persistence */
+if(localStorage.getItem("agro_speak")==="0") speakToggle.checked=false;
+speakToggle.onchange=()=>{
+  localStorage.setItem("agro_speak", speakToggle.checked?"1":"0");
+};
+
+/* Add Image */
+plusBtn.onclick=()=>fileInput.click();
+fileInput.onchange=e=>{
+  const f=e.target.files[0];
+  if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>appendUserMessage("Image added",ev.target.result);
+  r.readAsDataURL(f);
+  // Clear text input when image is selected for cleaner flow
+  textInput.value = "";
+};
+
+/* Append helpers */
+function appendUserMessage(t,img){
+  const d=document.createElement("div"); d.className="user";
+  const m=document.createElement("div"); m.className="msg"; m.textContent=t;
+  d.appendChild(m);
+  if(img){const im=document.createElement("img"); im.src=img; im.style.maxWidth="140px"; im.style.borderRadius="8px"; im.style.marginTop="6px"; d.appendChild(im);}
+  chatbox.appendChild(d); chatbox.scrollTop=chatbox.scrollHeight;
+}
+function appendBotMessage(h){
+  const d=document.createElement("div"); d.className="bot";
+  const m=document.createElement("div"); m.className="msg"; m.innerHTML=h;
+  d.appendChild(m); chatbox.appendChild(d);
+  chatbox.scrollTop=chatbox.scrollHeight;
+}
+function showThinking(){
+  const d=document.createElement("div"); d.className="bot";
+  const m=document.createElement("div"); m.className="msg";
+  m.innerHTML=`<div class="dots"><span></span><span></span><span></span></div>`;
+  d.appendChild(m); chatbox.appendChild(d);
+  chatbox.scrollTop=chatbox.scrollHeight;
+}
+function removeThinking(){
+  const bots=chatbox.querySelectorAll(".bot");
+  if(bots.length)bots[bots.length-1].remove();
+}
+
+/* Clean class name */
+function cleanClass(raw){
+  if(!raw)return{display:"",speak:""};
+  let s=String(raw).replace(/___/g," ").replace(/[_]/g," ").trim().replace(/\s+/g," ");
+  const display = s.split(' ').map(w => w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
+  return{
+    display: display,
+    speak: s.toLowerCase()
+  };
+}
+
+/* TTS */
+function speak(text,lang){
+  if(localStorage.getItem("agro_speak")==="0") return;
+  if(!("speechSynthesis"in window))return;
+  const map={en:"en-US",hi:"hi-IN",mr:"mr-IN",kn:"kn-IN",te:"te-IN"};
+  const code=map[lang]||"en-US";
+  let voice = speechSynthesis.getVoices().find(v => v.lang && v.lang.startsWith(code));
+  const u=new SpeechSynthesisUtterance(text);
+  if(voice) u.voice=voice;
+  u.lang = voice && voice.lang ? voice.lang : code;
+  u.rate = 1;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+
+/* Speech Recognition */
+let rec;
+if("webkitSpeechRecognition" in window || "SpeechRecognition" in window){
+  const R = window.SpeechRecognition || window.webkitSpeechRecognition;
+  rec = new R(); rec.continuous=false; rec.interimResults=false;
+  micBtn.onclick=()=>{
+    const map={en:"en-US",hi:"hi-IN",mr:"mr-IN",kn:"kn-IN",te:"te-IN"};
+    rec.lang = map[langSelect.value] || "en-US";
+    rec.start(); micBtn.classList.add("listening");
+  };
+  rec.onresult=e=>{
+    textInput.value=e.results[0][0].transcript || '';
+    micBtn.classList.remove("listening");
+  };
+  rec.onerror=()=> micBtn.classList.remove("listening");
+  rec.onend=()=> micBtn.classList.remove("listening");
+} else {
+  micBtn.disabled = true;
+  micBtn.title = "Speech recognition not supported";
+}
+
+/* Send */
+sendBtn.onclick=sendMessage;
+textInput.onkeydown=e=>{ if(e.key==="Enter"){ e.preventDefault(); sendMessage(); } };
+
+async function sendMessage(){
+  const file=fileInput.files[0];
+  const text=textInput.value.trim();
+  const lang=langSelect.value;
+  if(!file && !text){ alert("Type, speak, or add an image."); return; }
+
+  // ----------------------------------------------------------------
+  // UPDATED LOGIC: Only append the message if there is TEXT input.
+  // If a file is present, the image was already appended in the 
+  // fileInput.onchange handler, preventing the duplicate display.
+  // ----------------------------------------------------------------
+  if(text){
+    appendUserMessage(text);
+  } else if (!text && file) {
+    // If only an image was submitted and no text was entered, 
+    // the image is already displayed. Do nothing here to avoid double-display.
+  }
+
+  const fd=new FormData();
+  if(file) fd.append("file", file);
+  fd.append("text", text);
+  fd.append("lang", lang);
+
+  showThinking();
+  try {
+    const res = await fetch("/chat", { method: "POST", body: fd });
+    const data = await res.json();
+    console.log("RESPONSE /chat:", data);  // debug: inspect server JSON
+    removeThinking();
+
+    // ---------- IMAGE RESPONSE ----------
+    // server might send: { type: "image", class, predicted_class, confidence, cause, treatment, note, matched_db_class }
+    if(data.type === "image"){
+      const rawClass = data.predicted_class || data.class || data.predicted || null;
+      const c = cleanClass(rawClass);
+      const conf = (data.confidence !== undefined) ? data.confidence : (data.score !== undefined ? data.score : null);
+      const confDisplay = (conf === null) ? "N/A" : (typeof conf === "number" && conf <= 1 ? (conf*100).toFixed(2) + "%" : (typeof conf === "number" ? conf + "%" : String(conf)));
+      const cause = data.cause || data.cause_en || "No cause information available.";
+      const treatment = data.treatment || data.treatment_en || "No treatment information available.";
+
+      let html = `<b>Predicted:</b> ${c.display}<br>
+                  <b>Confidence:</b> ${confDisplay}<br>
+                  <b>Cause:</b> ${cause}<br>
+                  <b>Treatment:</b> ${treatment}`;
+      appendBotMessage(html);
+      // speak short summary
+      speak(`${c.speak}. Cause: ${cause}. Treatment: ${treatment}`, lang);
+
+      // optional: if server returned fallback matched_db_class or note, show it
+      if(data.matched_db_class || data.note){
+        const noteParts = [];
+        if(data.matched_db_class) noteParts.push("Matched DB entry: " + cleanClass(data.matched_db_class).display);
+        if(data.note) noteParts.push(data.note);
+        appendBotMessage(`<span class="meta">${noteParts.join(" — ")}</span>`);
+      }
+
+      return;
+    }
+
+    // ---------- TEXT RESPONSE ----------
+    // server may send either:
+    // 1) legacy single match: { type: "text", class, score, cause, treatment }
+    // 2) improved: { type: "text", top_matches: [ { class, score, cause, treatment }, ... ], query, message }
+    if(data.type === "text"){
+      // if top_matches is present and is an array -> show list
+      if(Array.isArray(data.top_matches) && data.top_matches.length > 0){
+        let html = `<div><b>Query:</b> ${data.query || text}</div>`;
+        html += "<div class='meta'><b>Top matches:</b></div><ol>";
+        data.top_matches.forEach(m => {
+          const mc = cleanClass(m.class || m.predicted_class || "");
+          // score may be 0-1 or 0-100
+          let sco = m.score;
+          if(typeof sco === "number" && sco <= 1) sco = (sco*100).toFixed(0) + "%";
+          else if(typeof sco === "number") sco = sco + "%";
+          else sco = sco || "";
+          html += `<li><b>${mc.display}</b> — ${sco}<br><small>Cause: ${m.cause || ""}</small><br><small>Treatment: ${m.treatment || ""}</small></li>`;
+        });
+        html += "</ol>";
+        appendBotMessage(html);
+        // speak first result
+        const top = data.top_matches[0];
+        if(top){
+          const topc = cleanClass(top.class || top.predicted_class || "");
+          speak(`${topc.speak}. Cause: ${top.cause || ""}. Treatment: ${top.treatment || ""}`, lang);
+        }
+        return;
+      }
+
+      // fallback: single result
+      const rawClass = data.class || data.predicted_class || (data.top_matches && data.top_matches[0] && data.top_matches[0].class) || null;
+      if(rawClass){
+        const c = cleanClass(rawClass);
+        const cause = data.cause || (data.top_matches && data.top_matches[0] && data.top_matches[0].cause) || "";
+        const treatment = data.treatment || (data.top_matches && data.top_matches[0] && data.top_matches[0].treatment) || "";
+        appendBotMessage(`<b>Matched:</b> ${c.display}<br><b>Cause:</b> ${cause}<br><b>Treatment:</b> ${treatment}`);
+        speak(`${c.speak}. Cause: ${cause}. Treatment: ${treatment}`, lang);
+        return;
+      }
+
+      // no match
+      appendBotMessage(`<em>${data.message || "No matching symptom found. Try adding crop name or more symptom words."}</em>`);
+      speak(data.message || "No matching symptom found. Try adding crop name or more symptom words.", lang);
+      return;
+    }
+
+    // ---------- OTHER / fallback ----------
+    appendBotMessage(`<em>${data.message || "Server returned unexpected format. Check console for JSON."}</em>`);
+    console.warn("Unexpected /chat response shape:", data);
+
+  } catch(err){
+    removeThinking();
+    appendBotMessage('<em>Server error — try again.</em>');
+    console.error("sendMessage error:", err);
+    // speak error if allowed
+    if(localStorage.getItem("agro_speak") !== "0") speak("Server error. Try again later.", langSelect.value);
+  } finally {
+    // clear inputs
+    fileInput.value = "";
+    textInput.value = "";
+  }
+}
+
+</script>
+</body>
+</html>

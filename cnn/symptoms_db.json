@@ -1,0 +1,181 @@
+{
+  "Pepper,_bell___Bacterial_spot": {
+    "symptoms": [
+      "small water-soaked dark spots on leaves",
+      "yellow halos around spots",
+      "spotting on fruit",
+      "leaf drop in severe cases",
+      "brown sunken lesions"
+    ],
+    "cause": "Bacterial infection (commonly Xanthomonas spp.).",
+    "treatment": "Remove infected leaves, avoid overhead irrigation, disinfect tools, and apply copper-based bactericides where recommended."
+  },
+
+  "Pepper,_bell___healthy": {
+    "symptoms": [
+      "uniform green leaves",
+      "no spots or lesions",
+      "normal fruit development",
+      "no wilting",
+      "good turgor"
+    ],
+    "cause": "No disease detected.",
+    "treatment": "Maintain regular watering, nutrition, and crop hygiene to keep plants healthy."
+  },
+
+  "Potato___Early_blight": {
+    "symptoms": [
+      "small brown circular spots on lower leaves",
+      "concentric ring pattern on lesions",
+      "yellowing around spots",
+      "lesions enlarge over time",
+      "defoliation in severe cases"
+    ],
+    "cause": "Fungal pathogen Alternaria solani (early blight).",
+    "treatment": "Remove infected foliage, rotate crops, mulch soil, avoid overhead watering, and apply recommended fungicides (e.g., chlorothalonil) if needed."
+  },
+
+  "Potato___Late_blight": {
+    "symptoms": [
+      "water-soaked dark patches on leaves",
+      "white fuzzy growth on leaf undersides",
+      "rapid collapse of foliage",
+      "brown lesions on stems and tubers",
+      "brown/rot on tubers"
+    ],
+    "cause": "Pathogen Phytophthora infestans (late blight).",
+    "treatment": "Remove and destroy infected plants, avoid wet conditions, use certified seed tubers, and apply systemic fungicides when necessary."
+  },
+
+  "Potato___healthy": {
+    "symptoms": [
+      "even green foliage",
+      "no spots or lesions",
+      "healthy tubers",
+      "no mold or rot",
+      "vigorous growth"
+    ],
+    "cause": "No disease detected.",
+    "treatment": "Continue good agronomic practices; monitor regularly for pests and diseases."
+  },
+
+  "Tomato___Bacterial_spot": {
+    "symptoms": [
+      "small water-soaked circular spots",
+      "yellow halos around lesions",
+      "dark scabby spots on fruit",
+      "shot-hole appearance on leaves",
+      "leaf yellowing and drop"
+    ],
+    "cause": "Bacterial infection often caused by Xanthomonas spp.",
+    "treatment": "Remove infected tissue, avoid overhead irrigation, rotate crops, and apply copper-based treatments as advised locally."
+  },
+
+  "Tomato___Early_blight": {
+    "symptoms": [
+      "brown spots with concentric rings",
+      "yellowing of surrounding leaf tissue",
+      "lesions start on older leaves",
+      "leaf curling and drop",
+      "reduced leaf area"
+    ],
+    "cause": "Fungal disease caused by Alternaria solani (early blight).",
+    "treatment": "Remove lower infected leaves, practice crop rotation, improve air flow, and use fungicides such as mancozeb or chlorothalonil when needed."
+  },
+
+  "Tomato___Late_blight": {
+    "symptoms": [
+      "large dark water-soaked patches",
+      "white moldy growth on undersides",
+      "rapid wilting and collapse",
+      "brown lesions on stems and fruit",
+      "severe fruit rot"
+    ],
+    "cause": "Oomycete Phytophthora infestans (late blight), favored by cool wet weather.",
+    "treatment": "Destroy infected plants, minimize leaf wetness, and apply effective fungicides promptly."
+  },
+
+  "Tomato___Leaf_Mold": {
+    "symptoms": [
+      "yellow patches on upper leaf surface",
+      "olive-green to brown mold on leaf undersides",
+      "leaf curling",
+      "premature leaf drop",
+      "reduced vigor"
+    ],
+    "cause": "Fungal disease (Passalora fulva) favored by humid conditions.",
+    "treatment": "Increase ventilation, avoid overhead watering, remove infected leaves, and apply appropriate fungicide if needed."
+  },
+
+  "Tomato___Septoria_leaf_spot": {
+    "symptoms": [
+      "many small circular spots with gray centers",
+      "dark borders around lesions",
+      "heavy leaf drop starting from lower canopy",
+      "reduced photosynthetic area",
+      "stunted growth if severe"
+    ],
+    "cause": "Fungal pathogen Septoria lycopersici, thrives in wet conditions.",
+    "treatment": "Remove infected lower leaves, use mulch, improve spacing/airflow, and spray fungicides like chlorothalonil if required."
+  },
+
+  "Tomato___Spider_mites Two-spotted_spider_mite": {
+    "symptoms": [
+      "tiny yellow or white speckling on leaves (stippling)",
+      "fine webbing between leaves",
+      "leaves become dry and bronzed",
+      "tiny moving mites visible on underside",
+      "leaf curling and drop"
+    ],
+    "cause": "Infestation by two-spotted spider mite (Tetranychus urticae).",
+    "treatment": "Increase humidity, spray with water to dislodge mites, apply insecticidal soap or miticide, and remove heavily infested material."
+  },
+
+  "Tomato___Target_Spot": {
+    "symptoms": [
+      "brown circular spots often with target rings",
+      "yellow halo or border around lesions",
+      "leaf blighting and drop",
+      "spots on stems and fruit in severe cases",
+      "reduced yield"
+    ],
+    "cause": "Fungal disease (Corynespora cassiicola).",
+    "treatment": "Remove infected leaves, improve airflow and spacing, reduce moisture on foliage, and use recommended fungicides."
+  },
+
+  "Tomato___Tomato_mosaic_virus": {
+    "symptoms": [
+      "mosaic or mottled leaf coloration",
+      "distorted or puckered leaves",
+      "stunted plant growth",
+      "reduced fruit size",
+      "uneven ripening"
+    ],
+    "cause": "Tobamovirus (Tomato mosaic virus) spread via tools, hands, or infected seed.",
+    "treatment": "Remove infected plants, disinfect tools and hands, use virus-free seed/stock, and practice strict sanitation."
+  },
+
+  "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+    "symptoms": [
+      "upward curling and yellowing of young leaves",
+      "stunting of plants",
+      "reduced flowering and fruit set",
+      "small distorted leaves",
+      "often spread rapidly in a field"
+    ],
+    "cause": "Viral disease (Tomato yellow leaf curl virus) transmitted by whiteflies.",
+    "treatment": "Control whiteflies (yellow sticky traps, insecticides or natural predators), remove infected plants, and grow resistant varieties where available."
+  },
+
+  "Tomato___healthy": {
+    "symptoms": [
+      "uniform green leaves",
+      "no spots, lesions or webbing",
+      "normal fruit set and size",
+      "vigorous growth",
+      "no unusual wilting"
+    ],
+    "cause": "No disease detected.",
+    "treatment": "Maintain balanced nutrition, irrigation, and routine pest monitoring to keep plants healthy."
+  }
+}

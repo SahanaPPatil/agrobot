@@ -1,0 +1,8 @@
+flask
+
+numpy
+pillow
+nltk
+deep-translator
+rapidfuzz
+werkzeug
