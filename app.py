@@ -2,7 +2,7 @@
 import os
 import json
 import numpy as np
-import io # NEW: Import io for in-memory file handling
+import io 
 from functools import lru_cache
 from flask import Flask, request, render_template, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
@@ -12,8 +12,6 @@ from deep_translator import GoogleTranslator
 import difflib
 from rapidfuzz import fuzz, process
 
-# --------- CONFIG ----------
-# UPLOAD_FOLDER is kept for 'send_from_directory' but file saving is removed.
 UPLOAD_FOLDER = "static/uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True) 
 
@@ -23,13 +21,11 @@ MODEL_PATH = "cnn/my_model.keras"
 CLASS_NAMES_PATH = "cnn/class_names.json"
 SYM_DB_PATH = "cnn/symptoms_db.json"
 
-# --------- LOAD MODEL & DATA ----------
-# Load model (if you are not using image branch you can skip this or guard)
 model = None
 try:
     model = load_model(MODEL_PATH)
 except Exception as e:
-    # If your runtime doesn't have TF or model file not present, keep model None and the image branch will error gracefully.
+    
     print("Warning: model load failed:", e)
     model = None
 
@@ -77,8 +73,7 @@ def normalize_tokens_using_spacy(text: str):
         tokens = [tok.lemma_.lower() for tok in doc if tok.is_alpha and not tok.is_stop]
         if tokens:
             return tokens
-        # if no tokens (rare), fall through to fallback
-    # fallback: simple alpha tokens (no lemmatization)
+
     return [w for w in t.split() if w.isalpha()]
 
 # --------- build phrase index (lemmatized phrases) ----------
