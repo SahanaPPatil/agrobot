@@ -44,6 +44,15 @@
       border:1px solid rgba(0,0,0,0.08);
       background:transparent;color:var(--text)
     }
+    
+    /* ********************************************************** */
+    /* 🔥 FIX: Force light text and dark background for options in Dark Mode */
+    body.dark select#langSelect option {
+      background: var(--bg);
+      color: var(--text) !important; 
+      /* !important is used to ensure the browser's default select styling is overridden */
+    }
+    /* ********************************************************** */
 
     /* Chat panel */
     .chat{
@@ -351,7 +360,7 @@ async function sendMessage(){
   try {
     const res = await fetch("/chat", { method: "POST", body: fd });
     const data = await res.json();
-    console.log("RESPONSE /chat:", data);  // debug: inspect server JSON
+    console.log("RESPONSE /chat:", data);  // debug: inspect server JSON
     removeThinking();
 
     // ---------- IMAGE RESPONSE ----------
