@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrobot | Login</title>
+    <style>
+        :root {
+            --bg: #f0f4f8;
+            --panel: #ffffff;
+            --text: #1a202c;
+            --accent: #28a745;
+            --accent-dark: #1e8449;
+            --muted: #718096;
+            --shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #e2e8f0 0%, #ffffff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: var(--text);
+        }
+
+        .login-card {
+            background: var(--panel);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        h2 { margin: 10px 0; font-size: 24px; font-weight: 700; }
+        p { color: var(--muted); margin-bottom: 30px; font-size: 14px; }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--muted);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #edf2f7;
+            border-radius: 10px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--accent);
+            background: #f9fffb;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .footer-note {
+            margin-top: 25px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <div class="logo">Ag</div>
+    <h2>Welcome Back</h2>
+    <p>Please enter your details to access AgroBot</p>
+
+    <form method="POST">
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Enter your username" required>
+        </div>
+        
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="login-btn">Sign In</button>
+    </form>
+
+    <div class="footer-note">
+        AI-Powered Multilingual Crop Diagnosis
+    </div>
+</div>
+
+</body>
+</html>

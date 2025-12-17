@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AgroBot Admin Panel</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f4f7f6; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; }
+        .delete-btn { background: #dc3545; padding: 5px 10px; font-size: 0.8rem; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h1>AgroBot Knowledge Base Manager</h1>
+    <a href="/">← Back to Chat</a> | <a href="/logout">Logout</a>
+
+    <div class="card">
+        <h3>Add New Disease Entry</h3>
+        <form action="/admin/add" method="POST">
+            <input type="text" name="disease_name" placeholder="Disease Name (e.g. Tomato___Late_blight)" required>
+            <textarea name="cause" placeholder="Cause description..." required></textarea>
+            <textarea name="treatment" placeholder="Treatment steps..." required></textarea>
+            <input type="text" name="symptoms" placeholder="Symptoms (comma separated: yellow spots, curling, wilting)" required>
+            <button type="submit">Save to Database</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>Current Diseases in Database</h3>
+        <table>
+            <tr>
+                <th>Disease Class</th>
+                <th>Action</th>
+            </tr>
+            {% for name in database.keys() %}
+            <tr>
+                <td>{{ name }}</td>
+                <td>
+                    <a href="/admin/delete/{{ name }}"><button class="delete-btn">Delete</button></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
